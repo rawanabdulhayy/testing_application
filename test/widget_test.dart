@@ -21,10 +21,27 @@ void main() {
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
+    //rebuilds after changing the state like setState.
     await tester.pump();
 
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
+  });
+
+  testWidgets("Reset Button Resets to Zero", (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+    // Tap the 'refresh' icon and trigger a frame.
+    await tester.tap(find.byIcon(Icons.refresh));
+    await tester.pump();
+
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
   });
 }
